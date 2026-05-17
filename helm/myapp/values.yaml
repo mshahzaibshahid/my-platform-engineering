@@ -1,15 +1,16 @@
 replicaCount: 1
 image:
   repository: nginxinc/nginx-unprivileged
-  tag: "alpine"
+  tag: "latest"
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
-  port: 8080
+  port: 80
 resources:
   limits:
-    cpu: 500m
-    memory: 128Mi
+    cpu: "500m"
+    memory: "128Mi"
   requests:
-    cpu: 250m
-    memory: 64Mi
+    cpu: "250m"
+    memory: "64Mi"
+environment: development

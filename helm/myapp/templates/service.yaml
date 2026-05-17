@@ -3,10 +3,14 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-svc
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    team: platform-team
 spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: 80
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8080
   type: {{ .Values.service.type }}
