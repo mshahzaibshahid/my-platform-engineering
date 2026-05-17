@@ -1,11 +1,11 @@
 replicaCount: 1
 image:
-  repository: nginx
-  tag: "latest"
+  repository: nginxinc/nginx-unprivileged
+  tag: "alpine"
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 resources:
   limits:
     cpu: 500m

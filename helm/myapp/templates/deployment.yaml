@@ -5,8 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Release.Name }}
-    team: platform-team
-    environment: {{ .Values.environment | default "dev" }}
+    team: platform
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,17 +15,25 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        team: platform-team
-        environment: {{ .Values.environment | default "dev" }}
+        team: platform
     spec:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 101
       containers:
         - name: {{ .Release.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
+            - containerPort: 8080
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 101
+            allowPrivilegeEscalation: false
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            limits:
+              cpu: "500m"
+              memory: "128Mi"
+            requests:
+              cpu: "250m"
+              memory: "64Mi"

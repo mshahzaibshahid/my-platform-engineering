@@ -29,3 +29,7 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
+    namespaces:
+      - dev
+      - staging
+      - production
