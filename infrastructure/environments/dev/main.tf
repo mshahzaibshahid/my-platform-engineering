@@ -16,3 +16,15 @@ module "dev_namespace" {
   name   = "dev"
   team   = "platform-team"
 }
+
+module "staging_namespace" {
+  source = "../../modules/k8s-namespace"
+  name   = "staging"
+  team   = "platform-team"
+}
+
+module "production_namespace" {
+  source = "../../modules/k8s-namespace"
+  name   = "production"
+  team   = "platform-team"
+}

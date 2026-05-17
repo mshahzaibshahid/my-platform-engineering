@@ -7,8 +7,8 @@ terraform {
   }
 }
 
-variable "name" { type = string }
-variable "team" { type = string }
+variable "name" {}
+variable "team" {}
 
 resource "kubernetes_namespace" "this" {
   metadata {
