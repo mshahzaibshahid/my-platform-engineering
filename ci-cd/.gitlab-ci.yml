@@ -1,0 +1,30 @@
+stages:
+  - build
+  - security-scan
+  - deploy
+
+variables:
+  IMAGE_NAME: "myapp"
+  IMAGE_TAG: "$CI_COMMIT_SHA"
+
+build-image:
+  stage: build
+  script:
+    - echo "Building Docker image..."
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - echo "Build complete"
+
+trivy-scan:
+  stage: security-scan
+  image: aquasec/trivy:latest
+  script:
+    - trivy image --severity HIGH,CRITICAL $IMAGE_NAME:$IMAGE_TAG
+    - echo "Security scan complete"
+
+deploy-dev:
+  stage: deploy
+  script:
+    - helm upgrade --install myapp ./helm/myapp --namespace dev
+    - echo "Deployed to dev"
+  only:
+    - main
